@@ -34,7 +34,7 @@ def mainloop(filename: str):     #read in file from command line
     del df[4]
     del df[6]
     df = df.rename(columns={0:'Youtube_ID',5:'Video_Location_Time',7:'Superchat',8:'Timestamp'})  #name the columns
-    console.print("........................INDIVIDUAL SUPERCHATS BY TIMESTAMP.....................................",style="white")
+    console.print("........................INDIVIDUAL SUPERCHATS BY TIMESTAMP.....................................",style="cyan")
     console.print("\n", df.round(2), "\n")
     #print(df['Superchat'].describe())
     console.print("........................BIGMAN7917's STATISTICS.................................................\n", style="cyan")
@@ -42,14 +42,19 @@ def mainloop(filename: str):     #read in file from command line
         console.print("[bold]ZERO[/] donations from [cyan][bold]BIGMAN7917[/][/]", style="bold red")
     else:    
         console.print(df[(df['Youtube_ID'] == 'BIGMAN7917') & (df['Superchat'] >= 1)].round(2), "\n")  # ['Superchat'].sum() for total.
+        console.print("BIGMAN7917 TOTAL SUPERCHATS:  " ,df[(df['Youtube_ID'] == 'BIGMAN7917')]['Superchat'].sum().round(2), "\n")
         console.print(df[(df['Youtube_ID'] == 'BIGMAN7917')]['Superchat'].describe().round(2), "\n")   #about Bigman's donations
     #together = [df, df2]
     #df3 = pd.concat(together)
     console.print("SUPERCHATS BY USER_ID\n")
-    console.print(df.groupby(['Youtube_ID'])['Superchat'].sum().round(2), "\n")
+    IDsortedData = df.groupby(['Youtube_ID'])['Superchat'].sum().round(2)
+    console.print(IDsortedData, "\n")
+    console.print("........................TOP SUPERCHATTERS!........................", "\n", IDsortedData.sort_values(ascending=False).head(), "\n", style="cyan")
+   # console.print("TOP SUPERCHATTERS!", "\n", df.groupby(['Youtube_ID'])['Superchat'].sum(), "\n")
     console.print("TOTAL SUPERCHATS:  ", df['Superchat'].sum().round(2), "\n")
-    df.to_excel(filename + ".xlsx")
-    df.to_xml(filename + ".xml")
+    console.print(df['Superchat'].describe())
+    #df.to_excel(filename + ".xlsx")
+    #df.to_xml(filename + ".xml")
 
 if __name__ == "__main__":
     app()
