@@ -11,14 +11,13 @@ import datetime
 
 import typer                #user interface library
 
-pd.set_option('display.max_colwidth', None)   #Show full columns and Rows
-pd.set_option('display.max_rows', None)
-
 console = Console()
 app = typer.Typer()
 
 @app.command()
 def mainloop(filename: str):     #read in file from command line
+    pd.set_option('display.max_colwidth', None)   #Show full columns and Rows
+    pd.set_option('display.max_rows', None)
     textfile = open(filename, 'r')  
     filetext = textfile.read()   #dump contents of the file into the filetext variable
     textfile.close()             #close the file
@@ -54,7 +53,7 @@ def mainloop(filename: str):     #read in file from command line
     console.print("TOTAL SUPERCHATS:  ", df['Superchat'].sum().round(2), "\n")
     console.print(df['Superchat'].describe())
     #df.to_excel(filename + ".xlsx")
-    #df.to_xml(filename + ".xml")
+    df.to_xml(filename + ".xml")
 
 if __name__ == "__main__":
     app()
